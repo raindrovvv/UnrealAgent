@@ -1,0 +1,35 @@
+# Unreal build outputs
+Binaries/
+Intermediate/
+Saved/
+DerivedDataCache/
+Build/
+UnrealAgent.Server/Build/
+
+# .NET build outputs
+**/bin/
+**/obj/
+
+# Runtime state and local config
+.unrealagent/
+.omc/
+**/.omc/
+tools_cache.json
+*.log
+*.tmp
+
+# IDE / OS
+.vs/
+.vscode/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+Thumbs.db
+.DS_Store
+
+# Local environment
+.env
+.env.*
+!.env.example

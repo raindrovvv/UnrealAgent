@@ -1,0 +1,62 @@
+@using UnrealAgent.Backend.Chat
+
+<!-- Evaluator 판정 블록 — PASS/FAIL 결과와 실패 기준을 표시합니다. -->
+<div class="flex gap-4 max-w-5xl mx-auto w-full z-10 msg-tool msg-enter">
+    <!-- 아바타 자리 (간격 유지) -->
+    <div class="size-8 shrink-0"></div>
+    <div class="flex flex-col w-full max-w-3xl">
+
+        <details class="group" open="@(!Message.Passed)">
+            <summary class="cursor-pointer flex items-center gap-3">
+                <!-- 원형 아이콘 (PASS=녹색, FAIL=주황색) -->
+                <div class="shrink-0 w-8 h-8 rounded-full bg-[#1a1a1a] border @BorderClass flex items-center justify-center @ShadowClass">
+                    <span class="material-symbols-outlined @IconColorClass text-[14px]">@(Message.Passed ? "check_circle" : "replay")</span>
+                </div>
+                <!-- 정보 바 -->
+                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded @BgClass border @BorderBarClass @TextColorClass hover:brightness-110 transition-all flex-1 max-w-lg shadow-sm">
+                    <span class="text-[10px] font-bold uppercase tracking-widest">@(Message.Passed ? "검증 완료" : "재시도")</span>
+                    <span class="text-[10px] font-sans bg-black/20 px-1.5 py-0.5 rounded border @BadgeBorderClass tracking-normal truncate flex-1" title="@Message.Content">@Message.Content</span>
+                    @if (!Message.Passed)
+                    {
+                        <span class="text-[9px] font-mono bg-black/30 px-1.5 py-px rounded border border-white/5">@Message.Attempt/3</span>
+                    }
+                    @if (Message.FailedCriteria.Length > 0)
+                    {
+                        <span class="material-symbols-outlined text-[16px] transition-transform group-open:rotate-180 ml-2">expand_more</span>
+                    }
+                </div>
+            </summary>
+
+            <!-- 실패 기준 목록 -->
+            @if (Message.FailedCriteria.Length > 0)
+            {
+                <div class="ml-11 mt-2 px-4 py-3 rounded bg-[#111] border border-orange-500/10 text-[12px] leading-relaxed max-w-lg">
+                    <ul class="flex flex-col gap-1">
+                        @foreach (string Criterion in Message.FailedCriteria)
+                        {
+                            <li class="flex items-start gap-2 text-orange-300/70">
+                                <span class="material-symbols-outlined text-[12px] mt-0.5 shrink-0">close</span>
+                                @Criterion
+                            </li>
+                        }
+                    </ul>
+                </div>
+            }
+        </details>
+
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired] public ChatUIMessage.HarnessEval Message { get; set; } = null!;
+
+    private bool IsPass => Message.Passed;
+
+    private string BorderClass    => IsPass ? "border-green-500/40"  : "border-orange-500/40";
+    private string ShadowClass    => IsPass ? "shadow-[0_0_8px_rgba(34,197,94,0.2)]"  : "shadow-[0_0_8px_rgba(249,115,22,0.2)]";
+    private string BgClass        => IsPass ? "bg-green-950/30"  : "bg-orange-950/30";
+    private string BorderBarClass => IsPass ? "border-green-500/20" : "border-orange-500/20";
+    private string TextColorClass => IsPass ? "text-green-300"   : "text-orange-300";
+    private string BadgeBorderClass => IsPass ? "border-green-500/10" : "border-orange-500/10";
+    private string IconColorClass => IsPass ? "text-green-400"   : "text-orange-400";
+}

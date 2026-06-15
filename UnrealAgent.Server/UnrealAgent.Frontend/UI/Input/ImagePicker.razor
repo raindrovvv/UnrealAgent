@@ -1,0 +1,10 @@
+@inherits JsComponentBase
+
+<!-- UE WebBrowser blocks file dialogs, so this button imports images from the clipboard. -->
+<button type="button"
+        @onclick="Pick"
+        title="클립보드 이미지 첨부"
+        aria-label="클립보드 이미지 첨부"
+        class="relative group p-1.5 text-[#666] hover:text-[#0070e0] transition-colors rounded hover:bg-[#222]">
+    <span class="material-symbols-outlined text-[18px]">attach_file</span>
+</button>

@@ -1,0 +1,30 @@
+{
+  "category": "blueprint",
+  "version": "UE5.7",
+  "apis": [
+    {
+      "name": "unreal.EditorAssetLibrary.load_asset",
+      "signature": "load_asset(object_path: str) -> unreal.Object",
+      "description": "Load an asset by its object path. Returns None if not found.",
+      "example": "bp = unreal.EditorAssetLibrary.load_asset('/Game/Game/MyBP')"
+    },
+    {
+      "name": "unreal.KismetEditorUtilities.compile_blueprint",
+      "signature": "compile_blueprint(blueprint: unreal.Blueprint) -> None",
+      "description": "Compile a blueprint. Must be called after adding variables/components.",
+      "example": "unreal.KismetEditorUtilities.compile_blueprint(bp)"
+    },
+    {
+      "name": "unreal.EditorAssetLibrary.save_asset",
+      "signature": "save_asset(asset_to_save: str, only_if_is_dirty: bool = True) -> bool",
+      "description": "Save an asset to disk.",
+      "example": "unreal.EditorAssetLibrary.save_asset('/Game/Game/MyBP')"
+    },
+    {
+      "name": "unreal.EditorAssetLibrary.does_asset_exist",
+      "signature": "does_asset_exist(asset_path: str) -> bool",
+      "description": "Check if an asset exists at the given path.",
+      "example": "exists = unreal.EditorAssetLibrary.does_asset_exist('/Game/Game/MyBP')"
+    }
+  ]
+}

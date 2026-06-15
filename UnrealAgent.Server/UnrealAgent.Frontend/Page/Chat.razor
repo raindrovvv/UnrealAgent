@@ -1,0 +1,13 @@
+@page "/"
+
+<Header OnSettingsClick="ToggleSettings"/>
+<SettingsPanel bIsVisible="bShowSettings" OnClose="ToggleSettings" />
+<AgentTabBar Team="AgentRunner.Team" />
+<ChatMessages Messages="AgentRunner.Store.Messages" bIsReceiving="AgentRunner.Store.bIsReceiving" />
+<div class="relative shrink-0">
+    @if (PendingPermission is { } PermReq)
+    {
+        <PermissionDialog Request="PermReq" OnDecision="HandlePermissionDecision" />
+    }
+    <ChatInput OnSend="AgentRunner.EnqueueMessage" IsRunning="AgentRunner.IsRunning" OnCancel="AgentRunner.Cancel"/>
+</div>

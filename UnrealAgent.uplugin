@@ -1,0 +1,46 @@
+{
+	"FileVersion": 3,
+	"Version": 100,
+	"VersionName": "0.1.0-alpha",
+	"FriendlyName": "UnrealAgent",
+	"Description": "Local AI agent harness and MCP tool bridge for Unreal Editor automation.",
+	"Category": "Editor",
+	"CreatedBy": "raindrovvv",
+	"CreatedByURL": "https://github.com/raindrovvv",
+	"DocsURL": "https://github.com/raindrovvv/UnrealAgent#readme",
+	"MarketplaceURL": "",
+	"SupportURL": "https://github.com/raindrovvv/UnrealAgent/issues",
+	"CanContainContent": true,
+	"IsBetaVersion": true,
+	"IsExperimentalVersion": false,
+	"Installed": false,
+	"Plugins": [
+		{
+			"Name": "PythonScriptPlugin",
+			"Enabled": true
+		},
+		{
+			"Name": "EditorScriptingUtilities",
+			"Enabled": true
+		},
+		{
+			"Name": "EnhancedInput",
+			"Enabled": true
+		},
+		{
+			"Name": "ControlRig",
+			"Enabled": true
+		},
+		{
+			"Name": "Niagara",
+			"Enabled": true
+		}
+	],
+	"Modules": [
+		{
+			"Name": "UnrealAgent",
+			"Type": "Editor",
+			"LoadingPhase": "Default"
+		}
+	]
+}

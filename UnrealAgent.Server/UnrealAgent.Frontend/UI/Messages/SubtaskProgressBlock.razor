@@ -1,0 +1,43 @@
+@using UnrealAgent.Backend.Chat
+
+<div class="flex gap-4 max-w-5xl mx-auto w-full z-10 msg-tool msg-enter">
+    <div class="size-8 shrink-0"></div>
+    <div class="flex items-center gap-3 max-w-3xl">
+        <!-- 상태 아이콘 -->
+        <div class="shrink-0 w-8 h-8 rounded-full bg-[#1a1a1a] border @BorderColor flex items-center justify-center @ShadowClass">
+            @if (!Message.bIsCompleted)
+            {
+                <span class="material-symbols-outlined text-blue-400 text-[14px] animate-spin">autorenew</span>
+            }
+            else if (Message.bSuccess)
+            {
+                <span class="material-symbols-outlined text-green-400 text-[14px]">check_circle</span>
+            }
+            else
+            {
+                <span class="material-symbols-outlined text-red-400 text-[14px]">cancel</span>
+            }
+        </div>
+        <!-- 정보 바 -->
+        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded @BgColor border @BorderColor text-[10px] max-w-lg shadow-sm">
+            <span class="font-bold uppercase tracking-widest @LabelColor">@StatusLabel</span>
+            <span class="font-mono bg-black/20 px-1.5 py-0.5 rounded border border-white/5 text-[#888]">@Message.TaskId</span>
+            <span class="text-[#aaa] truncate flex-1" title="@Message.Content">@Message.Content</span>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired] public ChatUIMessage.SubtaskProgress Message { get; set; } = null!;
+
+    private string StatusLabel => !Message.bIsCompleted ? $"Wave {Message.WaveIndex} 실행 중"
+        : Message.bSuccess ? "완료" : "실패";
+    private string BorderColor => !Message.bIsCompleted ? "border-blue-500/40"
+        : Message.bSuccess ? "border-green-500/40" : "border-red-500/40";
+    private string BgColor => !Message.bIsCompleted ? "bg-blue-950/20"
+        : Message.bSuccess ? "bg-green-950/20" : "bg-red-950/20";
+    private string LabelColor => !Message.bIsCompleted ? "text-blue-300"
+        : Message.bSuccess ? "text-green-300" : "text-red-300";
+    private string ShadowClass => !Message.bIsCompleted ? "shadow-[0_0_8px_rgba(59,130,246,0.2)]"
+        : Message.bSuccess ? "shadow-[0_0_8px_rgba(34,197,94,0.2)]" : "shadow-[0_0_8px_rgba(239,68,68,0.2)]";
+}

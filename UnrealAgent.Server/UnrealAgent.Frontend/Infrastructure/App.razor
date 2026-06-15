@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html class="dark" lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UnrealAgent</title>
+
+    <!-- CEF 안정성을 위해 외부 CDN 없이 로컬 CSS/JS만 사용합니다. -->
+    <link rel="stylesheet" href="css/app.css?v=@CacheBuster" />
+
+</head>
+<body class="bg-[#0f0f0f] text-[#cfcfcf] font-sans h-screen flex flex-col overflow-hidden selection:bg-[#0070e0] selection:text-white">
+    <!-- Blazor 라우터 (URL에 맞는 페이지를 렌더링) -->
+    <Routes @rendermode="RenderMode.InteractiveServer" />
+
+    <!-- Blazor SignalR 연결 스크립트 -->
+    <script src="_framework/blazor.web.js"></script>
+
+    <!-- 채팅 UI 커스텀 스크립트 -->
+    <script src="js/chat.js?v=@CacheBuster"></script>
+</body>
+</html>
+
+@code {
+    /// <summary>서버 시작 시 생성되는 캐시 버스팅 값 (브라우저 캐시 무효화용)</summary>
+    private static readonly string CacheBuster = DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString();
+}

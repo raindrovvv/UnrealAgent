@@ -1,0 +1,36 @@
+{
+  "category": "animation",
+  "version": "UE5.7",
+  "apis": [
+    {
+      "name": "unreal.AnimationLibrary.get_num_keys",
+      "signature": "get_num_keys(animation_sequence: unreal.AnimSequence, track_name: str) -> int",
+      "description": "Get the number of keys on a specific track in an animation sequence.",
+      "example": "num_keys = unreal.AnimationLibrary.get_num_keys(anim_seq, 'root')"
+    },
+    {
+      "name": "unreal.AnimationLibrary.add_animation_notify_event",
+      "signature": "add_animation_notify_event(animation_sequence: unreal.AnimSequence, notify_class: unreal.Class, start_time: float, trigger_link_method: unreal.AnimLinkMethod = unreal.AnimLinkMethod.ABSOLUTE) -> unreal.AnimNotifyEvent",
+      "description": "Adds an animation notify event to the sequence.",
+      "example": "notify_event = unreal.AnimationLibrary.add_animation_notify_event(anim_seq, notify_class, 1.5)"
+    },
+    {
+      "name": "unreal.AnimationLibrary.get_animation_notify_events",
+      "signature": "get_animation_notify_events(animation_sequence: unreal.AnimSequence) -> list[unreal.AnimNotifyEvent]",
+      "description": "Returns all animation notify events in the sequence.",
+      "example": "notifies = unreal.AnimationLibrary.get_animation_notify_events(anim_seq)"
+    },
+    {
+      "name": "unreal.LevelSequenceEditorBlueprintLibrary.get_current_level_sequence",
+      "signature": "get_current_level_sequence() -> unreal.LevelSequence",
+      "description": "Get the currently opened level sequence in the sequencer editor.",
+      "example": "seq = unreal.LevelSequenceEditorBlueprintLibrary.get_current_level_sequence()"
+    },
+    {
+      "name": "unreal.LevelSequenceEditorBlueprintLibrary.add_actors",
+      "signature": "add_actors(actors: list[unreal.Actor]) -> list[unreal.MovieSceneBindingProxy]",
+      "description": "Add actors to the current level sequence in the sequencer editor.",
+      "example": "bindings = unreal.LevelSequenceEditorBlueprintLibrary.add_actors([my_actor])"
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+@using UnrealAgent.Backend.Chat
+
+<!-- Planner 계획 블록 — 서브태스크 목록을 접을 수 있는 details 블록으로 표시합니다. -->
+<div class="flex gap-4 max-w-5xl mx-auto w-full z-10 msg-tool msg-enter">
+    <!-- 아바타 자리 (간격 유지) -->
+    <div class="size-8 shrink-0"></div>
+    <div class="flex flex-col w-full max-w-3xl">
+
+        <details class="group" open="true">
+            <summary class="cursor-pointer flex items-center gap-3">
+                <!-- 원형 아이콘 (보라색) -->
+                <div class="shrink-0 w-8 h-8 rounded-full bg-[#1a1a1a] border border-purple-500/40 flex items-center justify-center shadow-[0_0_8px_rgba(168,85,247,0.2)]">
+                    <span class="material-symbols-outlined text-purple-400 text-[14px]">psychology</span>
+                </div>
+                <!-- 정보 바 -->
+                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded bg-purple-950/30 border border-purple-500/20 text-purple-300 hover:brightness-110 transition-all flex-1 max-w-lg shadow-sm">
+                    <span class="text-[10px] font-bold uppercase tracking-widest">계획 중</span>
+                    <span class="text-[10px] font-sans bg-black/20 px-1.5 py-0.5 rounded border border-purple-500/10 tracking-normal truncate flex-1" title="@Message.Content">@Message.Content</span>
+                    <span class="material-symbols-outlined text-[16px] transition-transform group-open:rotate-180 ml-2">expand_more</span>
+                </div>
+            </summary>
+
+            <!-- 서브태스크 목록 -->
+            @if (Message.Subtasks.Length > 0)
+            {
+                <div class="ml-11 mt-2 px-4 py-3 rounded bg-[#111] border border-purple-500/10 text-[12px] text-[#888] leading-relaxed max-w-lg">
+                    <ol class="list-decimal list-inside flex flex-col gap-1">
+                        @foreach (var Task in Message.Subtasks)
+                        {
+                            <li class="text-purple-300/70">
+                                @if (Task.DependsOn.Length > 0)
+                                {
+                                    <span class="text-purple-500/50 mr-1">[@string.Join(",", Task.DependsOn)]</span>
+                                }
+                                @Task.Description
+                            </li>
+                        }
+                    </ol>
+                </div>
+            }
+        </details>
+
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired] public ChatUIMessage.HarnessPlan Message { get; set; } = null!;
+}

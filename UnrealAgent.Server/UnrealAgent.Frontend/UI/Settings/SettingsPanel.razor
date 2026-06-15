@@ -1,0 +1,165 @@
+@if (bIsVisible)
+{
+    <div class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center" @onclick="OnClose">
+        <div class="bg-[#1a1a1a] border border-[#333] rounded-lg w-[420px] max-h-[80vh] overflow-y-auto shadow-2xl shadow-black/50" @onclick:stopPropagation>
+            <!-- 헤더 -->
+            <div class="flex items-center justify-between px-5 py-4 border-b border-[#333]">
+                <h2 class="text-[15px] font-semibold text-[#e0e0e0]">설정</h2>
+                <button @onclick="OnClose" class="size-7 rounded flex items-center justify-center text-[#888] hover:text-white hover:bg-[#333] transition-colors">
+                    <span class="material-symbols-outlined text-[18px]">close</span>
+                </button>
+            </div>
+
+            <div class="p-5 flex flex-col gap-5">
+                <!-- 활성 제공자 -->
+                <div class="flex flex-col gap-2.5">
+                    <div class="text-[10px] font-bold text-[#666] uppercase tracking-widest">활성 제공자</div>
+                    <div class="flex flex-col gap-1">
+                        <button @onclick='() => SelectProvider("anthropic_api")' class="flex items-center gap-2.5 px-3 py-2.5 rounded border border-[#333] text-left w-full hover:bg-white/5 transition-colors @(Auth.bIsAnthropicSelected ? "bg-white/[0.04]" : "")">
+                            <span class="text-[13px] font-medium text-[#ccc]">Claude API</span>
+                            @if (IsKeyConfigured("anthropic_api"))
+                            {
+                                <span class="ml-auto text-[10px] px-2 py-0.5 rounded bg-[#4ba96c]/10 text-[#4ba96c] border border-[#4ba96c]/20 font-bold">키 설정됨</span>
+                            }
+                            else
+                            {
+                                <span class="ml-auto text-[10px] px-2 py-0.5 rounded bg-[#e05e5e]/10 text-[#e05e5e] border border-[#e05e5e]/20 font-bold">키 없음</span>
+                            }
+                        </button>
+                        <button @onclick='() => SelectProvider("codex_cli")' class="flex items-center gap-2.5 px-3 py-2.5 rounded border border-[#333] text-left w-full hover:bg-white/5 transition-colors @(Auth.bIsCodexSelected ? "bg-white/[0.04]" : "")">
+                            <span class="text-[13px] font-medium text-[#ccc]">Codex CLI</span>
+                            @if (CodexStatus?.bIsLoggedIn == true)
+                            {
+                                <span class="ml-auto text-[10px] px-2 py-0.5 rounded bg-[#4ba96c]/10 text-[#4ba96c] border border-[#4ba96c]/20 font-bold">연결됨</span>
+                            }
+                            else if (CodexStatus?.bIsInstalled == false)
+                            {
+                                <span class="ml-auto text-[10px] px-2 py-0.5 rounded bg-[#e05e5e]/10 text-[#e05e5e] border border-[#e05e5e]/20 font-bold">없음</span>
+                            }
+                            else
+                            {
+                                <span class="ml-auto text-[10px] px-2 py-0.5 rounded bg-[#e0a94b]/10 text-[#e0a94b] border border-[#e0a94b]/20 font-bold">확인 필요</span>
+                            }
+                        </button>
+                    </div>
+                </div>
+
+                @if (Auth.bIsCodexSelected)
+                {
+                    <!-- Codex 모델 설정 -->
+                    <div class="flex flex-col gap-2.5">
+                        <div class="text-[10px] font-bold text-[#666] uppercase tracking-widest">Codex 모델</div>
+                        <div class="flex gap-2 items-center">
+                            <input type="text"
+                                   @bind="CodexModelInput"
+                                   placeholder="gpt-5.5"
+                                   class="flex-1 bg-[#151515] border border-[#333] rounded px-3 py-2 text-sm font-mono text-[#ccc] outline-none focus:border-[#0070e0]/50 focus:ring-1 focus:ring-[#0070e0]/20 transition-all placeholder:text-[#555]" />
+                            <button @onclick="SaveCodexModel" class="px-3 py-2 border border-[#333] text-[#ccc] text-sm font-medium rounded hover:bg-white/5 transition-colors">
+                                저장
+                            </button>
+                            @if (RecentlySaved.Contains("codex_model"))
+                            {
+                                <span class="text-[11px] text-[#4ba96c] font-semibold whitespace-nowrap">✓ 저장됨</span>
+                            }
+                        </div>
+                        <div class="flex gap-1.5 flex-wrap">
+                            @foreach (string Preset in CodexModelPresets)
+                            {
+                                <button @onclick='() => { CodexModelInput = Preset; Auth.SetCodexModel(Preset); }'
+                                        class="px-2.5 py-1 text-[11px] rounded border transition-colors @(Auth.CodexModel == Preset ? "border-[#0070e0]/50 bg-[#0070e0]/10 text-[#6cb4ff]" : "border-[#333] text-[#666] hover:text-[#ccc] hover:bg-white/5")">
+                                    @Preset
+                                </button>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col gap-2.5">
+                        <div class="text-[10px] font-bold text-[#666] uppercase tracking-widest">Codex 상태</div>
+                        <div class="flex items-center gap-2">
+                            <button @onclick="RefreshCodexStatus" disabled="@bIsCheckingCodex" class="px-3 py-2 border border-[#333] text-[#ccc] text-sm font-medium rounded hover:bg-white/5 transition-colors disabled:opacity-50">
+                                @(bIsCheckingCodex ? "확인 중..." : "상태 갱신")
+                            </button>
+                            @if (CodexStatus is not null)
+                            {
+                                <span class="text-[12px] text-[#888]">@CodexStatus.Summary</span>
+                            }
+                        </div>
+                        <div class="text-[12px] text-[#888] leading-relaxed border border-[#333] rounded px-3 py-2 bg-[#151515]">
+                            Codex CLI는 로컬 `codex login` 상태(ChatGPT 구독)를 사용합니다. API 키 입력은 필요하지 않습니다.
+                        </div>
+                    </div>
+                }
+
+                <!-- API 키 설정 -->
+                <div class="flex flex-col gap-2.5">
+                    <div class="text-[10px] font-bold text-[#666] uppercase tracking-widest">API 키</div>
+                    <p class="text-[12px] text-[#888] leading-relaxed">
+                        키를 입력하지 않으면 환경변수(ANTHROPIC_API_KEY / OPENAI_API_KEY / DEEPSEEK_API_KEY)를 사용합니다.
+                        빈 값으로 저장하면 저장된 키가 제거됩니다.
+                    </p>
+
+                    <div class="flex flex-col gap-1.5">
+                        <label class="text-[12px] text-[#888]">Anthropic (Claude API)</label>
+                        <div class="flex gap-2 items-center">
+                            <input type="password"
+                                   @bind="AnthropicKeyInput"
+                                   placeholder="@(Auth.HasStoredApiKey("anthropic_api") ? "저장됨 — 새 키 입력 시 교체" : "sk-ant-...")"
+                                   class="flex-1 bg-[#151515] border border-[#333] rounded px-3 py-2 text-sm font-mono text-[#ccc] outline-none focus:border-[#0070e0]/50 focus:ring-1 focus:ring-[#0070e0]/20 transition-all placeholder:text-[#555]" />
+                            <button @onclick='() => { SaveApiKey("anthropic_api", AnthropicKeyInput); AnthropicKeyInput = ""; }' class="px-3 py-2 border border-[#333] text-[#ccc] text-sm font-medium rounded hover:bg-white/5 transition-colors">
+                                저장
+                            </button>
+                            @if (RecentlySaved.Contains("anthropic_api"))
+                            {
+                                <span class="text-[11px] text-[#4ba96c] font-semibold whitespace-nowrap">✓ 저장됨</span>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col gap-1.5">
+                        <label class="text-[12px] text-[#888]">OpenAI</label>
+                        <div class="flex gap-2 items-center">
+                            <input type="password"
+                                   @bind="OpenAIKeyInput"
+                                   placeholder="@(Auth.HasStoredApiKey("openai") ? "저장됨 — 새 키 입력 시 교체" : "sk-...")"
+                                   class="flex-1 bg-[#151515] border border-[#333] rounded px-3 py-2 text-sm font-mono text-[#ccc] outline-none focus:border-[#0070e0]/50 focus:ring-1 focus:ring-[#0070e0]/20 transition-all placeholder:text-[#555]" />
+                            <button @onclick='() => { SaveApiKey("openai", OpenAIKeyInput); OpenAIKeyInput = ""; }' class="px-3 py-2 border border-[#333] text-[#ccc] text-sm font-medium rounded hover:bg-white/5 transition-colors">
+                                저장
+                            </button>
+                            @if (RecentlySaved.Contains("openai"))
+                            {
+                                <span class="text-[11px] text-[#4ba96c] font-semibold whitespace-nowrap">✓ 저장됨</span>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col gap-1.5">
+                        <label class="text-[12px] text-[#888]">DeepSeek</label>
+                        <div class="flex gap-2 items-center">
+                            <input type="password"
+                                   @bind="DeepSeekKeyInput"
+                                   placeholder="@(Auth.HasStoredApiKey("deepseek") ? "저장됨 — 새 키 입력 시 교체" : "sk-...")"
+                                   class="flex-1 bg-[#151515] border border-[#333] rounded px-3 py-2 text-sm font-mono text-[#ccc] outline-none focus:border-[#0070e0]/50 focus:ring-1 focus:ring-[#0070e0]/20 transition-all placeholder:text-[#555]" />
+                            <button @onclick='() => { SaveApiKey("deepseek", DeepSeekKeyInput); DeepSeekKeyInput = ""; }' class="px-3 py-2 border border-[#333] text-[#ccc] text-sm font-medium rounded hover:bg-white/5 transition-colors">
+                                저장
+                            </button>
+                            @if (RecentlySaved.Contains("deepseek"))
+                            {
+                                <span class="text-[11px] text-[#4ba96c] font-semibold whitespace-nowrap">✓ 저장됨</span>
+                            }
+                        </div>
+                    </div>
+
+                    @if (!string.IsNullOrEmpty(ErrorMessage))
+                    {
+                        <div class="text-[11px] text-[#e05e5e] mt-1">@ErrorMessage</div>
+                    }
+                </div>
+
+                <div class="border-t border-[#333] p-4 text-center">
+                    <div class="text-[11px] font-mono text-[#888]">UnrealAgent 0.1.0-alpha</div>
+                    <div class="text-[11px] text-[#666] mt-0.5">Built by raindrovvv</div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

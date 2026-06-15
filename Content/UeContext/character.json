@@ -1,0 +1,60 @@
+{
+  "category": "character",
+  "version": "UE5.7",
+  "description": "Guides for Unreal Engine modular characters, Skeletal Meshes, Control Rig manipulation, and MetaHuman customization.",
+  "metahuman_structure": {
+    "hierarchy": {
+      "Root": "SkeletalMeshComponent (Body - acts as Leader Mesh)",
+      "Children": {
+        "Face": "SkeletalMeshComponent (Facial mesh and curves)",
+        "Torso": "SkeletalMeshComponent (Clothing/Chest - follows Body animation)",
+        "Legs": "SkeletalMeshComponent (Clothing/Pants - follows Body animation)",
+        "Feet": "SkeletalMeshComponent (Shoes/Feet - follows Body animation)",
+        "GroomComponents": {
+          "Hair": "GroomComponent (Attached to Face)",
+          "Eyebrows": "GroomComponent (Attached to Face)",
+          "Eyelashes": "GroomComponent (Attached to Face)",
+          "Mustache": "GroomComponent (Attached to Face)",
+          "Beard": "GroomComponent (Attached to Face)"
+        }
+      }
+    },
+    "animation_sync": "MetaHuman body parts (Torso, Legs, Feet) must be synced to the main Body SkeletalMeshComponent. In C++ or Python, call set_leader_pose_component on each follower component, passing the Body component as the leader."
+  },
+  "apis": [
+    {
+      "name": "unreal.SkeletalMeshComponent.set_skeletal_mesh_asset",
+      "signature": "set_skeletal_mesh_asset(new_mesh: unreal.SkeletalMesh) -> None",
+      "description": "Updates the skeletal mesh asset used by this component.",
+      "example": "torso_comp.set_skeletal_mesh_asset(unreal.EditorAssetLibrary.load_asset('/Game/MetaHumans/Common/Female/Medium/NormalWeight/Body/M_Med_NRW_Torso'))"
+    },
+    {
+      "name": "unreal.SkeletalMeshComponent.set_leader_pose_component",
+      "signature": "set_leader_pose_component(leader_pose_component: unreal.SkeletalMeshComponent, force_reinit: bool = True) -> None",
+      "description": "Set the leader pose component. Essential for keeping modular MetaHuman parts (Torso, Legs, Feet) synchronized with the main Body animation.",
+      "example": "torso_comp.set_leader_pose_component(body_comp)"
+    },
+    {
+      "name": "unreal.GroomComponent.set_groom_asset",
+      "signature": "set_groom_asset(groom_asset: unreal.GroomAsset) -> None",
+      "description": "Sets the groom asset (hair, eyebrows, beard, etc.) for a GroomComponent.",
+      "example": "hair_comp.set_groom_asset(unreal.EditorAssetLibrary.load_asset('/Game/MetaHumans/Common/Grooms/Hair_Short_Messy'))"
+    },
+    {
+      "name": "unreal.ControlRigComponent.set_control_value_vector",
+      "signature": "set_control_value_vector(control_name: str, value: unreal.Vector) -> None",
+      "description": "Sets a vector control value on a Control Rig component.",
+      "example": "control_rig_comp.set_control_value_vector('IK_Foot_L', unreal.Vector(0, 0, 15))"
+    },
+    {
+      "name": "unreal.ControlRigComponent.get_control_value",
+      "signature": "get_control_value(control_name: str) -> float | unreal.Vector | unreal.Transform",
+      "description": "Gets the current value of a Control Rig control pin by name.",
+      "example": "value = control_rig_comp.get_control_value('Head_LookAt')"
+    }
+  ],
+  "local_engine_scripts": {
+    "metahuman_animator": "Engine/Plugins/MetaHuman/MetaHumanAnimator/Content/Python/ - Contains performance capture and audio-driven face automation scripts.",
+    "metahuman_character": "Engine/Plugins/MetaHuman/MetaHumanCharacter/Content/Python/examples/ - Contains scripts for batch editing MetaHuman cosmetic properties (skin, makeup, eyes)."
+  }
+}

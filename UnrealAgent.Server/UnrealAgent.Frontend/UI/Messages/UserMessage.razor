@@ -1,0 +1,28 @@
+<!-- 유저 메시지 (우측 정렬)입니다. -->
+<div class="message-row user-message-row flex flex-row-reverse gap-4 max-w-5xl mx-auto w-full z-10 msg-enter">
+    <div class="message-avatar size-8 shrink-0 rounded bg-[#222] flex items-center justify-center border border-[#444] shadow-md mt-1">
+        <span class="material-symbols-outlined text-[#aaa] text-[16px]">person</span>
+    </div>
+    <div class="message-content flex flex-col gap-4 items-end w-full">
+        <div class="message-meta flex items-baseline gap-2">
+            <span class="text-[10px] text-[#555] font-sans">@Message.Timestamp.ToString("h:mm tt")</span>
+            <span class="text-xs font-bold text-[#e0e0e0] tracking-wide">You</span>
+        </div>
+
+        @if (Message.HasImage)
+        {
+            <div class="max-w-xs overflow-hidden rounded border border-[#333] bg-[#151515] shadow-md">
+                <img src="data:@Message.ImageMediaType;base64,@Message.ImageBase64"
+                     class="block max-h-48 w-full object-contain"
+                     alt="" />
+            </div>
+        }
+
+        @if (!string.IsNullOrWhiteSpace(Message.Content))
+        {
+            <div class="user-message-body text-[13px] text-[#ccc] leading-relaxed text-right bg-gradient-to-l from-[#1a1a1a] to-transparent py-1 pl-4 rounded-l max-w-3xl w-full font-normal tracking-wide">
+                @Message.Content
+            </div>
+        }
+    </div>
+</div>
