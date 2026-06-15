@@ -494,7 +494,10 @@ bool UMcpServer::HandleMcpRequest(const FHttpServerRequest& Request, const FHttp
 	{
 		if (Method.StartsWith(TEXT("notifications/")))
 		{
-			OnComplete(FHttpServerResponse::Create(TEXT(""), TEXT("text/plain")));
+			// Some MCP HTTP clients validate the response content type even for
+			// JSON-RPC notifications. Keep the body minimal, but never return the
+			// default text/plain response because Codex treats that as transport fatal.
+			OnComplete(FHttpServerResponse::Create(TEXT("{}"), TEXT("application/json")));
 			return true;
 		}
 

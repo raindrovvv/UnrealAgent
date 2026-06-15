@@ -557,8 +557,6 @@ public sealed class CodexCliService
         if (Profile == CodexCliExecutionProfile.Lightweight)
             return Overrides;
 
-        Overrides.Insert(0, "features.rmcp_client=true");
-
         foreach ((string Name, McpServerConfig Config) in LoadCodexMcpServers())
         {
             if (!string.IsNullOrWhiteSpace(Config.Url))

@@ -159,6 +159,8 @@ public sealed class PromptBuilder(ToolRegistry ToolRegistry, ModelSettings Model
         Sb.AppendLine("Do not claim actions you did not verify.");
         Sb.AppendLine("Reply in the same language as the user.");
         Sb.AppendLine("Be concise and follow exact reply instructions when the user asks for exact text.");
+        Sb.AppendLine();
+        Sb.AppendLine(ToolInventory());
         if (DocsRag.BuildContext(CurrentInput) is { } DocsContext)
         {
             Sb.AppendLine();
