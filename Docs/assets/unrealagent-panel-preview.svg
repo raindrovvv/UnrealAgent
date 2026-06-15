@@ -1,0 +1,29 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1280" height="720" fill="#101112"/>
+  <rect x="60" y="48" width="1160" height="624" rx="18" fill="#171819" stroke="#2C2F33" stroke-width="2"/>
+  <rect x="60" y="48" width="1160" height="76" rx="18" fill="#1D1F21"/>
+  <rect x="88" y="72" width="36" height="36" rx="8" fill="#303338" stroke="#5D646C"/>
+  <text x="99" y="96" fill="#FFFFFF" font-family="Segoe UI, Arial" font-size="22" font-weight="800">U</text>
+  <text x="146" y="96" fill="#E8EAED" font-family="Segoe UI, Arial" font-size="24" font-weight="700">UNREALAGENT</text>
+  <rect x="318" y="77" width="64" height="26" rx="6" fill="#303338" stroke="#484D53"/>
+  <text x="333" y="95" fill="#AAB0B8" font-family="Segoe UI, Arial" font-size="12" font-weight="700">ALPHA</text>
+  <rect x="92" y="156" width="1096" height="392" rx="10" fill="#111213"/>
+  <line x1="92" y1="224" x2="1188" y2="224" stroke="#22262A"/>
+  <rect x="118" y="184" width="36" height="36" rx="8" fill="#303338" stroke="#5D646C"/>
+  <text x="130" y="209" fill="#FFFFFF" font-family="Segoe UI, Arial" font-size="21" font-weight="800">U</text>
+  <text x="176" y="198" fill="#E8EAED" font-family="Segoe UI, Arial" font-size="16" font-weight="700">UnrealAgent</text>
+  <text x="176" y="242" fill="#E8EAED" font-family="Segoe UI, Arial" font-size="24" font-weight="700">AI agent harness for Unreal Editor.</text>
+  <text x="176" y="284" fill="#AAB0B8" font-family="Segoe UI, Arial" font-size="18">Chat with local tools, inspect editor state, capture screenshots, and automate workflows.</text>
+  <rect x="176" y="336" width="860" height="54" rx="8" fill="#102216" stroke="#2EBA66"/>
+  <circle cx="206" cy="363" r="13" fill="#12351F" stroke="#2EBA66" stroke-width="2"/>
+  <text x="236" y="370" fill="#72E29A" font-family="Segoe UI, Arial" font-size="16" font-weight="800">THINKING</text>
+  <rect x="176" y="414" width="560" height="52" rx="8" fill="#191B1D" stroke="#34383D"/>
+  <text x="204" y="447" fill="#C9CDD2" font-family="Segoe UI, Arial" font-size="16">Tool result: selected actor info</text>
+  <rect x="92" y="576" width="1096" height="72" rx="10" fill="#151617" stroke="#0078D4" stroke-width="2"/>
+  <text x="122" y="621" fill="#727A84" font-family="Segoe UI, Arial" font-size="18">Message UnrealAgent...</text>
+  <rect x="922" y="594" width="92" height="36" rx="6" fill="#1E2124" stroke="#3A3F45"/>
+  <text x="943" y="617" fill="#E8EAED" font-family="Segoe UI, Arial" font-size="13" font-weight="700">NORMAL</text>
+  <rect x="1030" y="594" width="66" height="36" rx="6" fill="#0078D4"/>
+  <text x="1054" y="617" fill="#FFFFFF" font-family="Segoe UI, Arial" font-size="16" font-weight="800">↑</text>
+  <text x="60" y="702" fill="#5C636B" font-family="Segoe UI, Arial" font-size="13">Preview mockup for README. Actual editor appearance depends on Unreal theme and viewport layout.</text>
+</svg>

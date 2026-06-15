@@ -1,0 +1,51 @@
+name: Bug report
+description: Report a reproducible UnrealAgent problem.
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a bug. Please remove secrets, private project paths, and proprietary logs before sharing.
+  - type: input
+    id: unreal-version
+    attributes:
+      label: Unreal Engine version
+      placeholder: "5.7 source build, 5.6, etc."
+    validations:
+      required: true
+  - type: input
+    id: provider
+    attributes:
+      label: Provider
+      placeholder: "Codex CLI, Claude CLI, Anthropic API, OpenAI-compatible, DeepSeek-compatible"
+  - type: textarea
+    id: summary
+    attributes:
+      label: What happened?
+      description: Describe the issue and the expected behavior.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open UnrealAgent panel
+        2. Send ...
+        3. See ...
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant logs
+      description: Paste only redacted logs.
+      render: text
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Safety check
+      options:
+        - label: I removed API keys, private project paths, and proprietary content from this report.
+          required: true

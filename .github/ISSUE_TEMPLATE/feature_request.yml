@@ -1,0 +1,34 @@
+name: Feature request
+description: Suggest a new UnrealAgent capability.
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What workflow should this improve?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposal
+      description: What should UnrealAgent do?
+    validations:
+      required: true
+  - type: dropdown
+    id: risk
+    attributes:
+      label: Editor state risk
+      options:
+        - Read-only
+        - Mutates selected assets or actors
+        - Bulk edits or destructive actions
+        - Unsure
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered

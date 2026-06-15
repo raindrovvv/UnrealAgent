@@ -9,6 +9,8 @@ UnrealAgent.Server/Build/
 # .NET build outputs
 **/bin/
 **/obj/
+dist/
+*.zip
 
 # Runtime state and local config
 .unrealagent/
